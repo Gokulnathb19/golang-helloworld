@@ -4,7 +4,7 @@ pipeline {
         stage("Git") {
             steps {
               script {
-                git 'https://github.com/cloud/simple-spring.git'
+                git 'https://github.com/Gokulnathb19/golang-helloworld.git'
               }
             }
         }
