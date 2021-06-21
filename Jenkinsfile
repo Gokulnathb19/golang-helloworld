@@ -9,6 +9,7 @@ pipeline {
         stage("Build project") {
             steps {
               script {
+                  def root = tool type: 'go', name: 'Go 1.15'
                   withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin:${HOME}/go/bin"]) {
                     sh 'go build -o helloworld main.go'
                   }
