@@ -9,7 +9,9 @@ pipeline {
         stage("Build project") {
             steps {
               script {
-                sh 'go build -o helloworld main.go'
+                  withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin:${HOME}/go/bin"]) {
+                    sh 'go build -o helloworld main.go'
+                  }
               }
             }
         }
