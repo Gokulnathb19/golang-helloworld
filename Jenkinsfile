@@ -29,5 +29,12 @@ pipeline {
                 }
             }
         }
+        stage("Push image") {
+            steps {
+                script {
+                    sh 'kubectl apply -f deployment.yaml'
+                }
+            }
+        }
     }    
 }
