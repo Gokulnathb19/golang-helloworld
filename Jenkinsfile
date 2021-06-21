@@ -1,3 +1,4 @@
+def dockerHome = tool 'docker'
 pipeline {
     agent any
     stages {
@@ -19,15 +20,19 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("gokulnathb/golang-helloworld")
+                    withEnv(["${dockerHome}/bin:${env.PATH}"]) {
+                        myapp = docker.build("gokulnathb/golang-helloworld")
+                    }
                 }
             }
         }
         stage("Push image") {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                            myapp.push("latest")
+                    withEnv(["${dockerHome}/bin:${env.PATH}"]) {
+                        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                                myapp.push("latest")
+                        }
                     }
                 }
             }
