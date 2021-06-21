@@ -1,11 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage("Git") {
+        stage("Checkout code") {
             steps {
-              script {
-                git 'https://github.com/Gokulnathb19/golang-helloworld.git'
-              }
+              checkout scm
             }
         }
         stage("Build project") {
@@ -30,6 +28,6 @@ pipeline {
                     }
                 }
             }
-        }        
+        }
     }    
 }
