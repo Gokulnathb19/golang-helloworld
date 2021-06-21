@@ -29,7 +29,7 @@ pipeline {
                 }
             }
         }
-        stage("Push image") {
+        stage("Deploy image") {
             steps {
                 script {
                     sh 'kubectl apply -f deployment.yaml'
