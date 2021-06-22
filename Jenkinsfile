@@ -4,6 +4,11 @@ pipeline {
         dockerHome = tool 'docker'
     }
     stages {
+        stage("Initialize") {
+            def dockerHome = tool 'myDocker'
+            sh 'echo ${dockerHome}'
+            env.PATH = "${dockerHome}/bin:${env.PATH}"
+        }
         stage("Checkout code") {
             steps {
               checkout scm
@@ -22,19 +27,15 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    withEnv(["PATH=${env.dockerHome}/bin:${env.PATH}"]) {
-                        myapp = docker.build("gokulnathb/golang-helloworld")
-                    }
+                    myapp = docker.build("gokulnathb/golang-helloworld")
                 }
             }
         }
         stage("Push image") {
             steps {
                 script {
-                    withEnv(["PATH=${env.dockerHome}/bin:${env.PATH}"]) {
-                        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                                myapp.push("latest")
-                        }
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                            myapp.push("latest")
                     }
                 }
             }
