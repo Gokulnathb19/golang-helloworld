@@ -19,5 +19,5 @@ spec:
     spec:
       containers:
       - name: helloworld
-        image: gokulnathb/hello:latest
+        image: gokulnathb/golang-helloworld:latest
         imagePullPolicy: IfNotPresent
