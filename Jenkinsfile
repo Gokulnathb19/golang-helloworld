@@ -22,7 +22,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    withEnv(["${env.dockerHome}/bin:${env.PATH}"]) {
+                    withEnv(["PATH=${env.dockerHome}/bin:${env.PATH}"]) {
                         myapp = docker.build("gokulnathb/golang-helloworld")
                     }
                 }
@@ -31,7 +31,7 @@ pipeline {
         stage("Push image") {
             steps {
                 script {
-                    withEnv(["${env.dockerHome}/bin:${env.PATH}"]) {
+                    withEnv(["PATH=${env.dockerHome}/bin:${env.PATH}"]) {
                         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                                 myapp.push("latest")
                         }
