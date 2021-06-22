@@ -1,6 +1,9 @@
 def dockerHome = tool 'docker'
 pipeline {
     agent any
+    environment {
+        dockerHome = tool 'docker'
+    }
     stages {
         stage("Checkout code") {
             steps {
@@ -20,7 +23,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    withEnv(["${dockerHome}/bin:${env.PATH}"]) {
+                    withEnv(["${env.dockerHome}/bin:${env.PATH}"]) {
                         myapp = docker.build("gokulnathb/golang-helloworld")
                     }
                 }
@@ -29,7 +32,7 @@ pipeline {
         stage("Push image") {
             steps {
                 script {
-                    withEnv(["${dockerHome}/bin:${env.PATH}"]) {
+                    withEnv(["${env.dockerHome}/bin:${env.PATH}"]) {
                         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                                 myapp.push("latest")
                         }
