@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    stages {
+        stage("Checkout code") {
+            steps {
+              checkout scm
+            }
+        }
+        stage("Deploy image") {
+            steps {
+                script {
+                    sh 'kubectl apply -f deployment.yaml'
+                }
+            }
+        }
+    }    
+}
