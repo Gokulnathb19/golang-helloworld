@@ -1,4 +1,3 @@
-def dockerHome = tool 'docker'
 pipeline {
     agent any
     environment {
