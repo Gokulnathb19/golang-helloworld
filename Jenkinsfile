@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        dockerHome = tool 'docker'
-    }
     stages {
         stage("Initialize") {
             steps {
