@@ -5,9 +5,13 @@ pipeline {
     }
     stages {
         stage("Initialize") {
-            def dockerHome = tool 'myDocker'
-            sh 'echo ${dockerHome}'
-            env.PATH = "${dockerHome}/bin:${env.PATH}"
+            steps {
+              script {
+                def dockerHome = tool 'myDocker'
+                sh 'echo ${dockerHome}'
+                env.PATH = "${dockerHome}/bin:${env.PATH}"
+              }
+            }
         }
         stage("Checkout code") {
             steps {
