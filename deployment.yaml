@@ -7,6 +7,10 @@ metadata:
 spec:
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: golang-helloworld
+  replicas: 1
   template:
     metadata:
       labels:
