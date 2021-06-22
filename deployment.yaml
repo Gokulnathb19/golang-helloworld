@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-name: golang-helloworld
-labels:
-  app: golang-helloworld
+  name: golang-helloworld
+  labels:
+    app: golang-helloworld
 spec:
-strategy:
-  type: Recreate
-template:
-  metadata:
-    labels:
-      app: golang-helloworld
-      tier: golang-helloworld
-  spec:
-    containers:
-    - name: helloworld
-      image: gokulnathb/hello:latest
-      imagePullPolicy: Always
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: golang-helloworld
+        tier: golang-helloworld
+    spec:
+      containers:
+      - name: helloworld
+        image: gokulnathb/hello:latest
+        imagePullPolicy: Always
