@@ -44,6 +44,7 @@ pipeline {
             steps {
                 script {
                     MY_POD_NAME = 'golang-helloworld'
+                    EXIT_STATE = 0
                     try {
                         //sh 'MY_POD_NAME=golang-helloworld'
                         //sh 'DEPLOY_NAME=golang-helloworld'
@@ -51,12 +52,15 @@ pipeline {
                         //sh 'POD_HASH_LABEL=`kubectl get rs $RS_NAME -o jsonpath="{.metadata.labels.pod-template-hash}"` ; echo $POD_HASH_LABEL'
                         //sh 'POD_NAMES=`kubectl get pods -l pod-template-hash=$POD_HASH_LABEL --show-labels | tail -n +2 | awk \'{print $1}\'`; echo $POD_NAMES'
                         sh "kubectl cp $MY_POD_NAME:/output/test_results.txt ./test_results.txt"
-                        sh 'cat ./test_results.txt'
+                        //sh 'cat ./test_results.txt'
+                        sh './test_output.sh' 
                     } catch (Exception e) {
+                        echo 'Exception occurred: ' + e.toString()
+                        EXIT_STATE = 1
+                    } finally {
                         //sh 'kubectl delete deployment golang-helloworld'
                         sh "kubectl delete pod $MY_POD_NAME"
-                        echo 'Exception occurred: ' + e.toString()
-                        sh 'exit 1'
+                        sh "exit $EXIT_STATE"
                     }
                 }
             }
