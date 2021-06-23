@@ -16,7 +16,12 @@ pipeline {
         stage("Test Deployment") {
             steps {
                 script {
-                    
+                    sh 'DEPLOY_NAME=golang-helloworld'
+                    sh 'RS_NAME=`kubectl describe deployment $DEPLOY_NAME -n jenkins|grep "^NewReplicaSet"|awk \'{print $2}\'`'
+                    sh 'POD_HASH_LABEL=`kubectl get rs $RS_NAME -o jsonpath="{.metadata.labels.pod-template-hash}" -n jenkins`'
+                    sh 'POD_NAME=`kubectl get pods -l pod-template-hash=$POD_HASH_LABEL --show-labels -n jenkins | tail -n +2 | awk \'{print $1}\'`'
+                    sh 'kubectl cp $POD_NAME:/output/test_results.txt ./test_results.txt'
+                    sh 'cat ./test_results.txt'
                 }
             }
         }
