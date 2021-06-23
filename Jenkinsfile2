@@ -17,8 +17,9 @@ pipeline {
         stage("Test Deployment") {
             steps {
                 script {
+                    MY_POD_NAME = 'golang-helloworld'
                     try {
-                        sh 'MY_POD_NAME=golang-helloworld'
+                        //sh 'MY_POD_NAME=golang-helloworld'
                         //sh 'DEPLOY_NAME=golang-helloworld'
                         //sh 'RS_NAME=`kubectl describe deployment $DEPLOY_NAME | grep "^NewReplicaSet"|awk \'{print $2}\'|awk \'{print $1}\'`; echo $RS_NAME'
                         //sh 'POD_HASH_LABEL=`kubectl get rs $RS_NAME -o jsonpath="{.metadata.labels.pod-template-hash}"` ; echo $POD_HASH_LABEL'
