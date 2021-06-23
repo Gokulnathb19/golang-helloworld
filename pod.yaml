@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: me-test-tools
+  name: golang-helloworld
   labels:
-    app: me-test-tools
+    app: golang-helloworld
 spec:
     containers:
-    - name: metesttools
-      image: gcr.io/microedge-dev/userspace/privafy/amd64/me-test-tool:0.0.1
+    - name: helloworld
+      image: gokulnathb/golang-helloworld:latest
       imagePullPolicy: Always
