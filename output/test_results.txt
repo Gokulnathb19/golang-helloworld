@@ -1,1 +1,1 @@
-{"started": true, "succes":true, "stopped": true}
+{"started": true, "success":true, "stopped": true}
