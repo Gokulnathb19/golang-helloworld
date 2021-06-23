@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: me-test-tools
+  labels:
+    app: me-test-tools
+spec:
+    containers:
+    - name: metesttools
+      image: gcr.io/microedge-dev/userspace/privafy/amd64/me-test-tool:0.0.1
+      imagePullPolicy: Always
