@@ -28,7 +28,7 @@ pipeline {
                         sh 'cat ./test_results.txt'
                     } catch (Exception e) {
                         //sh 'kubectl delete deployment golang-helloworld'
-                        //sh 'kubectl delete pod $MY_POD_NAME'
+                        sh "kubectl delete pod $MY_POD_NAME"
                         echo 'Exception occurred: ' + e.toString()
                         sh 'exit 1'
                     }
