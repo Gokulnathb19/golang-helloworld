@@ -6,7 +6,7 @@ pipeline {
               checkout scm
             }
         }
-        stage("Deploy image") {
+        stage("Create Deployment") {
             steps {
                 script {
                     sh 'kubectl apply -f deployment.yaml'
@@ -16,12 +16,18 @@ pipeline {
         stage("Test Deployment") {
             steps {
                 script {
-                    sh 'DEPLOY_NAME=golang-helloworld'
-                    sh 'RS_NAME=`kubectl describe deployment $DEPLOY_NAME |grep "^NewReplicaSet"|awk \'{print $2}\'`'
-                    sh 'POD_HASH_LABEL=`kubectl get rs $RS_NAME -o jsonpath="{.metadata.labels.pod-template-hash}"`'
-                    sh 'POD_NAME=`kubectl get pods -l pod-template-hash=$POD_HASH_LABEL --show-labels | tail -n +2 | awk \'{print $1}\'`'
-                    sh 'kubectl cp $POD_NAME:/output/test_results.txt ./test_results.txt'
-                    sh 'cat ./test_results.txt'
+                    try {
+                        sh 'DEPLOY_NAME=golang-helloworld'
+                        sh 'RS_NAME=`kubectl describe deployment $DEPLOY_NAME | grep "^NewReplicaSet"|awk \'{print $2}\'`'
+                        sh 'POD_HASH_LABEL=`kubectl get rs $RS_NAME -o jsonpath="{.metadata.labels.pod-template-hash}"`'
+                        sh 'POD_NAME=`kubectl get pods -l pod-template-hash=$POD_HASH_LABEL --show-labels | tail -n +2 | awk \'{print $1}\'`'
+                        sh 'kubectl cp $POD_NAME:/output/test_results.txt ./test_results.txt'
+                        sh 'cat ./test_results.txt'
+                    } catch (Exception e) {
+                        sh 'kubectl delete deployment golang-helloworld'
+                        echo 'Exception occurred: ' + e.toString()
+                        sh 'exit 1'
+                    }
                 }
             }
         }
