@@ -20,4 +20,4 @@ spec:
       containers:
       - name: helloworld
         image: gokulnathb/golang-helloworld:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
