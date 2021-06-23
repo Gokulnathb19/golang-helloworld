@@ -46,6 +46,7 @@ pipeline {
                     MY_POD_NAME = 'golang-helloworld'
                     EXIT_STATE = 0
                     try {
+                        sh 'sleep 10'
                         //sh 'MY_POD_NAME=golang-helloworld'
                         //sh 'DEPLOY_NAME=golang-helloworld'
                         //sh 'RS_NAME=`kubectl describe deployment $DEPLOY_NAME | grep "^NewReplicaSet"|awk \'{print $2}\'|awk \'{print $1}\'`; echo $RS_NAME'
